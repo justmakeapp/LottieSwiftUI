@@ -1,5 +1,6 @@
 import Foundation
 import Lottie
+import SnapKit
 import SwiftUI
 
 #if os(iOS)
@@ -81,34 +82,31 @@ public struct LottieView: ViewRepresentable {
 
     #if os(macOS)
         public func makeNSView(context _: Context) -> NSView {
-            let containerView = NSView()
             let animationView = makeAnimationView()
-
-            containerView.addSubview(animationView)
-
-            animationView.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                animationView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 0),
-                animationView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0),
-                animationView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 0),
-                animationView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 0),
-            ])
-
-            return containerView
+            return animationView
         }
 
         public func updateNSView(_ nsView: NSView, context _: Context) {
             guard let animationView = nsView.subviews.first as? LottieAnimationView else {
                 return
             }
+
             updateAnimationView(animationView)
+        }
+
+        @available(macOS 13.0, *)
+        public func sizeThatFits(_ proposal: ProposedViewSize, nsView _: NSView, context _: Context) -> CGSize? {
+            let width = proposal.width ?? 0
+            let height = proposal.height ?? 0
+
+            let size = CGSize(width: width, height: height)
+            return size
         }
     #endif
 
     private func updateAnimationView(_ animationView: LottieAnimationView) {
         if !animationView.isAnimationPlaying,
-           configuration.loopMode != .playOnce
-        {
+           configuration.loopMode != .playOnce {
             animationView.play()
         }
     }

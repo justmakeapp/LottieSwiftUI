@@ -13,10 +13,15 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/airbnb/lottie-spm.git", exact: "4.2.0"),
+        .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.6.0"))
     ],
     targets: [
         .target(
-            name: "LottieSwiftUI", dependencies: [.product(name: "Lottie", package: "lottie-spm")]
+            name: "LottieSwiftUI",
+            dependencies: [
+                .product(name: "Lottie", package: "lottie-spm"),
+                "SnapKit",
+            ]
         ),
     ]
 )
