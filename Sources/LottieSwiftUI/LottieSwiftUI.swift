@@ -5,10 +5,12 @@ import SwiftUI
 
 #if os(iOS)
     import UIKit
+
     typealias ViewRepresentable = UIViewRepresentable
 #endif
 #if os(macOS)
     import AppKit
+
     typealias ViewRepresentable = NSViewRepresentable
 #endif
 
