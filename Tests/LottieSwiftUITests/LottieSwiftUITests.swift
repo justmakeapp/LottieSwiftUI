@@ -2,7 +2,7 @@
 import XCTest
 
 final class LottieSwiftUITests: XCTestCase {
-    func testExample() throws {
+    func testExample() {
         // XCTest Documenation
         // https://developer.apple.com/documentation/xctest
 
